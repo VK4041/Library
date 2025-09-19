@@ -72,18 +72,82 @@ body {
     grid-auto-rows: clamp(200px, 25%, 300px)
 }
 
+.lastLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lastLine>p {
+    margin: 0;
+    padding: 5px
+}
+
+.num-pages {
+    width: 25%;
+    font-size: 0.5rem;
+}
+
+.num-pages::after {
+    content: " pages"
+}
+
+.unReadStatus {
+    margin: 0;
+    padding: 2px 10px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+}
+
+.readStatus {
+    margin: 0;
+    padding: 2px 10px;
+    background-color: rgb(128, 64, 0);
+    color: white;
+    border-radius: 5px;
+}
+
+.cross-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: red;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.cross-btn:hover {
+    background-color: rgb(225, 15, 15);
+}
+
+.cross-btn:active {
+    box-shadow: 1px 1px black
+}
+
 .book {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border: 1px solid black;
     border-radius: 5px;
-    padding: 1rem 2rem;
     background: linear-gradient(rgba(165, 42, 42, 0.5), rgba(0, 0, 0, 0.2));
+    position: relative
 }
 
 .book-title {
     text-shadow: 1px 2px 1px white;
+    padding: 1rem 2rem
+}
+
+.book-title * {
+    margin: 0
 }
 
 .book-name {
@@ -105,6 +169,7 @@ body {
 
 .book-id {
     text-align: right;
+    font-size: 0.5rem;
 }
 
 .footer {
