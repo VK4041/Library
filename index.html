@@ -12,36 +12,27 @@
     <div class="container">
         <h1 class="title">Library</h1>
         <div class="book-container">
-            <div class="book-input">
-                <button type="submit">Add New Book</button>
+            <form class="book-form">
+                <button id="add-book" type="submit">Add New Book</button>
                 <div class="input-row">
                     <label for="name">Book name:</label>
-                    <input type="text" id="name" name="name">
+                    <input type="text" id="name" name="name" required>
                 </div>
                 <div class="input-row">
                     <label for="author">Author:</label>
-                    <input type="text" id="author" name="author">
+                    <input type="text" id="author" name="author" required>
                 </div>
                 <div class="input-row">
-                    <label for="color">Color:</label>
-                    <input type="text" id="color" name="color">
+                    <label for="read">Read/Un-read:</label>
+                    <input type="text" id="read" name="read" required>
                 </div>
-            </div>
+                <div class="input-row">
+                    <label for="pages">Pages:</label>
+                    <input type="text" id="pages" name="pages" required>
+                </div>
+
+            </form>
             <div class="book-area">
-                <div class="book">
-                    <button type="button" class="cross-btn">X</button>
-                    <div class="book-title">
-                        <p class="book-name">LOTR</p>
-                        <p class="book-author">idk someone</p>
-                    </div>
-                    <div class="lastLine">
-                        <p class="num-pages">120</p>
-                        <button type="button" class="read-btn unReadStatus">Un-Read</button>
-                        <p class="book-id">12bd201d10</p>
-                    </div>
-
-
-                </div>
             </div>
         </div>
         <div class="footer">
@@ -49,7 +40,7 @@
         </div>
 
     </div>
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
 </body>
 
 </html>

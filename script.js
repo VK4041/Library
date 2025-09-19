@@ -1,5 +1,6 @@
 const myLibrary = []
 const bookArea = document.querySelector('.book-area')
+const bookForm = document.querySelector('.book-form')
 
 const Book = function (id, name, author, read, pages) {
     this.id = id;
@@ -15,8 +16,9 @@ const addBooktoLibrary = function (name, author, read, pages) {
     myLibrary.push(bookObj)
 }
 
-const displayBooks = function (bookArray) {
-    bookArray.forEach(book => {
+const displayBooks = function (library) {
+    while (bookArea.childElementCount) bookArea.removeChild(bookArea.childNodes[0])
+    library.forEach(book => {
         createBookCard(book)
     })
 }
@@ -33,8 +35,8 @@ const createBookCard = function (bookObj) {
     const readBtn = document.createElement('button')
 
     appendChildren(titleDiv, bookName, bookAuthor)
-    appendChildren(lastLine, numPages, readBtn, bookId)
-    appendChildren(book, titleDiv, lastLine, crossBtn)
+    appendChildren(lastLine, numPages, bookId)
+    appendChildren(book, titleDiv, readBtn, lastLine, crossBtn)
 
     book.classList.add('book');
     crossBtn.classList.add('cross-btn');
@@ -51,8 +53,10 @@ const createBookCard = function (bookObj) {
     readBtn.textContent = bookObj.read;
     bookId.textContent = bookObj.id;
     crossBtn.textContent = 'X'
+    numPages.textContent = bookObj.pages
 
-    // return book
+    crossBtn.setAttribute('data-id', bookObj.id)
+    readBtn.setAttribute('data-id', bookObj.id)
     bookArea.appendChild(book)
 }
 
@@ -60,6 +64,35 @@ const appendChildren = function (parent, ...children) {
     children.forEach(child => parent.appendChild(child))
 }
 
-addBooktoLibrary('The Hobbit', 'idk man', 'Un-read', '150')
-addBooktoLibrary('Loda Lassan', 'maine banaya hai', 'Un-read', 500)
-displayBooks(myLibrary)
+const removeBook = function (removeId) {
+    let idArray = myLibrary.map(book => book.id);
+    let removeIndex = idArray.indexOf(removeId)
+    myLibrary.splice(removeIndex, 1)
+    displayBooks(myLibrary)
+}
+
+const addBook = function (event) {
+    let inputs = Array.from(event.target).slice(1)
+    let data = []
+    inputs.forEach(input => data.push(input.value))
+    addBooktoLibrary(...data)
+    displayBooks(myLibrary)
+    event.preventDefault()
+    bookForm.reset()
+}
+
+bookForm.addEventListener('submit', addBook)
+bookArea.addEventListener('click', (event) => {
+    let target = event.target
+    if (target.hasAttribute('data-id')) {
+        if (target.className.includes('cross-btn'))
+            removeBook(target.getAttribute('data-id'))
+
+        //else only read/unread is possible
+        else {
+            target.classList.toggle('readStatus')
+            target.textContent = target.className.includes('readStatus') ?
+                'Read' : 'Un-Read';
+        }
+    }
+})      
