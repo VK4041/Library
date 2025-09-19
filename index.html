@@ -14,21 +14,25 @@
         <div class="book-container">
             <form class="book-form">
                 <button id="add-book" type="submit">Add New Book</button>
+                <em>Required fields are marked by *</em>
                 <div class="input-row">
-                    <label for="name">Book name:</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="name">*Book name:</label>
+                    <input type="text" id="name" name="name" required placeholder="Hobbit">
                 </div>
                 <div class="input-row">
-                    <label for="author">Author:</label>
-                    <input type="text" id="author" name="author" required>
+                    <label for="author">*Author:</label>
+                    <input type="text" id="author" name="author" required placeholder="John Doe">
                 </div>
                 <div class="input-row">
-                    <label for="read">Read/Un-read:</label>
-                    <input type="text" id="read" name="read" required>
+                    <label for="read">Read</label>
+                    <input type="radio" id="read" name="readStatus" value="Read">
+                    <label for="unread">Unread</label>
+                    <input type="radio" id="unread" name="readStatus" value="Un-Read">
                 </div>
                 <div class="input-row">
                     <label for="pages">Pages:</label>
-                    <input type="text" id="pages" name="pages" required>
+                    <input type="text" id="pages" name="pages" pattern="\d+" max="5000" min="0"
+                        placeholder="Must be a number">
                 </div>
 
             </form>

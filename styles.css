@@ -28,7 +28,7 @@ body {
 }
 
 .book-container>* {
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .book-form {
@@ -60,6 +60,7 @@ body {
 .input-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .book-area {

@@ -2,17 +2,18 @@ const myLibrary = []
 const bookArea = document.querySelector('.book-area')
 const bookForm = document.querySelector('.book-form')
 
-const Book = function (id, name, author, read, pages) {
-    this.id = id;
-    this.name = name;
-    this.author = author;
-    this.read = read;
-    this.pages = pages
+const Book = function (bookObj) {
+    this.id = bookObj.id;
+    this.name = bookObj.name;
+    this.author = bookObj.author;
+    this.read = bookObj.readStatus;
+    this.pages = bookObj.pages
 }
 
-const addBooktoLibrary = function (name, author, read, pages) {
+const addBooktoLibrary = function (formEntries) {
     let id = crypto.randomUUID();
-    let bookObj = new Book(id, name, author, read, pages);
+    formEntries.id = id;
+    let bookObj = new Book(formEntries);
     myLibrary.push(bookObj)
 }
 
@@ -57,6 +58,7 @@ const createBookCard = function (bookObj) {
 
     crossBtn.setAttribute('data-id', bookObj.id)
     readBtn.setAttribute('data-id', bookObj.id)
+    if (bookObj.read === 'Read') readBtn.classList.toggle('readStatus')
     bookArea.appendChild(book)
 }
 
@@ -72,12 +74,13 @@ const removeBook = function (removeId) {
 }
 
 const addBook = function (event) {
-    let inputs = Array.from(event.target).slice(1)
-    let data = []
-    inputs.forEach(input => data.push(input.value))
-    addBooktoLibrary(...data)
-    displayBooks(myLibrary)
     event.preventDefault()
+    const formData = new FormData(event.target)
+    const formEntries = Object.fromEntries(formData)
+    if (!formEntries.readStatus) formEntries.readStatus = 'Un-Read'
+    if (formEntries.pages === '') formEntries.pages = '0';
+    addBooktoLibrary(formEntries)
+    displayBooks(myLibrary)
     bookForm.reset()
 }
 
