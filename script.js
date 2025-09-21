@@ -9,6 +9,12 @@ const Book = function (bookObj) {
     this.read = bookObj.readStatus;
     this.pages = bookObj.pages
 }
+Book.prototype.toggleReadStatus = function (target) {
+    target.classList.toggle('readStatus')
+    this.read = target.className.includes('readStatus') ?
+        'Read' : 'Un-Read';
+    target.textContent = this.read
+}
 
 const addBooktoLibrary = function (formEntries) {
     let id = crypto.randomUUID();
@@ -18,6 +24,7 @@ const addBooktoLibrary = function (formEntries) {
 }
 
 const displayBooks = function (library) {
+    //Reset bookArea
     while (bookArea.childElementCount) bookArea.removeChild(bookArea.childNodes[0])
     library.forEach(book => {
         createBookCard(book)
@@ -66,9 +73,7 @@ const appendChildren = function (parent, ...children) {
     children.forEach(child => parent.appendChild(child))
 }
 
-const removeBook = function (removeId) {
-    let idArray = myLibrary.map(book => book.id);
-    let removeIndex = idArray.indexOf(removeId)
+const removeBook = function (removeIndex) {
     myLibrary.splice(removeIndex, 1)
     displayBooks(myLibrary)
 }
@@ -83,19 +88,31 @@ const addBook = function (event) {
     displayBooks(myLibrary)
     bookForm.reset()
 }
+const getTargetBook = function (target) {
+    let targetId = target.getAttribute('data-id')
+    let idArray = myLibrary.map(book => book.id);
+    let removeIndex = idArray.indexOf(target.getAttribute('data-id'))
+    let results = myLibrary.map((book, index) => {
+        if (book.id === targetId) {
+            return { book, index }
+        }
+    })
+    return results
+}
 
 bookForm.addEventListener('submit', addBook)
 bookArea.addEventListener('click', (event) => {
     let target = event.target
     if (target.hasAttribute('data-id')) {
-        if (target.className.includes('cross-btn'))
-            removeBook(target.getAttribute('data-id'))
+        let results = getTargetBook(target)
+        let book = results[0].book
+        let bookIndex = results[0].index
 
-        //else only read/unread is possible
+        if (target.className.includes('cross-btn'))
+            removeBook(bookIndex)
+
         else {
-            target.classList.toggle('readStatus')
-            target.textContent = target.className.includes('readStatus') ?
-                'Read' : 'Un-Read';
+            book.toggleReadStatus(target)
         }
     }
 })      
