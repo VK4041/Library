@@ -90,11 +90,10 @@ const addBook = function (event) {
 }
 const getTargetBook = function (target) {
     let targetId = target.getAttribute('data-id')
-    let idArray = myLibrary.map(book => book.id);
-    let removeIndex = idArray.indexOf(target.getAttribute('data-id'))
-    let results = myLibrary.map((book, index) => {
+    let results
+    myLibrary.map((book, index) => {
         if (book.id === targetId) {
-            return { book, index }
+            results = { book, index }
         }
     })
     return results
@@ -104,12 +103,9 @@ bookForm.addEventListener('submit', addBook)
 bookArea.addEventListener('click', (event) => {
     let target = event.target
     if (target.hasAttribute('data-id')) {
-        let results = getTargetBook(target)
-        let book = results[0].book
-        let bookIndex = results[0].index
-
+        let { book, index } = getTargetBook(target)
         if (target.className.includes('cross-btn'))
-            removeBook(bookIndex)
+            removeBook(index)
 
         else {
             book.toggleReadStatus(target)
